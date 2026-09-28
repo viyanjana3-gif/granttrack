@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>GrantTrack - Faculty</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                G
+            </div>
+
+            <div>
+
+                <h2>GrantTrack</h2>
+
+                <span>Grant Management</span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/index.html" class="nav-item">
+
+                <span>▣</span>
+                Dashboard
+
+            </a>
+
+
+            <a href="/applications.html" class="nav-item">
+
+                <span>▤</span>
+                Applications
+
+            </a>
+
+
+            <a href="/faculty.html" class="nav-item active">
+
+                <span>♙</span>
+                Faculty
+
+            </a>
+
+
+            <a href="/stages.html" class="nav-item">
+
+                <span>◈</span>
+                Grant Stages
+
+            </a>
+
+
+            <a href="/expenditures.html" class="nav-item">
+
+                <span>₹</span>
+                Expenditures
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome-text">
+                    Grant Management
+                </p>
+
+                <h1>
+                    Faculty
+                </h1>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Grant Manager
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= ADD FACULTY ================= -->
+
+        <section class="overview-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        FACULTY MANAGEMENT
+                    </p>
+
+                    <h2>
+                        Add Faculty Member
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-panel">
+
+
+                <form id="facultyForm">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="facultyName">
+                            Faculty Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="facultyName"
+                            placeholder="Enter faculty name"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            placeholder="Enter department"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter faculty email"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- BUTTON -->
+
+                    <div
+                        style="
+                            margin-top:20px;
+                            display:flex;
+                            gap:12px;
+                        ">
+
+                        <button
+                            type="submit"
+                            style="
+                                background:#2563eb;
+                                color:white;
+                                border:none;
+                                padding:12px 24px;
+                                border-radius:8px;
+                                cursor:pointer;
+                                font-weight:600;
+                            ">
+
+                            Add Faculty
+
+                        </button>
+
+
+                        <button
+                            type="reset"
+                            style="
+                                background:#e5e7eb;
+                                color:#374151;
+                                border:none;
+                                padding:12px 24px;
+                                border-radius:8px;
+                                cursor:pointer;
+                                font-weight:600;
+                            ">
+
+                            Clear
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="message"
+                        style="
+                            margin-top:15px;
+                            font-weight:600;
+                        ">
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= FACULTY LIST ================= -->
+
+        <section class="overview-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        FACULTY DATABASE
+                    </p>
+
+                    <h2>
+                        Faculty Members
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="info-panel">
+
+
+                <div style="overflow-x:auto;">
+
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                        ">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th
+                                    style="
+                                        padding:15px;
+                                        text-align:left;
+                                        border-bottom:1px solid #e5e7eb;
+                                    ">
+
+                                    ID
+
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:15px;
+                                        text-align:left;
+                                        border-bottom:1px solid #e5e7eb;
+                                    ">
+
+                                    Name
+
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:15px;
+                                        text-align:left;
+                                        border-bottom:1px solid #e5e7eb;
+                                    ">
+
+                                    Department
+
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:15px;
+                                        text-align:left;
+                                        border-bottom:1px solid #e5e7eb;
+                                    ">
+
+                                    Email
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="facultyTableBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    style="
+                                        text-align:center;
+                                        padding:30px;
+                                    ">
+
+                                    Loading faculty...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <span>
+                GrantTrack © 2026
+            </span>
+
+            <span>
+                Grant Management System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        // ==================================================
+        // PAGE LOAD
+        // ==================================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadFaculty();
+
+                document
+                    .getElementById("facultyForm")
+                    .addEventListener(
+                        "submit",
+                        addFaculty
+                    );
+
+            }
+        );
+
+
+
+        // ==================================================
+        // LOAD FACULTY
+        // ==================================================
+
+        async function loadFaculty() {
+
+
+            const table =
+                document.getElementById(
+                    "facultyTableBody"
+                );
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/faculty"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load faculty"
+                    );
+
+                }
+
+
+                const facultyList =
+                    await response.json();
+
+
+                table.innerHTML = "";
+
+
+                if (
+                    !Array.isArray(facultyList) ||
+                    facultyList.length === 0
+                ) {
+
+
+                    table.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="4"
+                                style="
+                                    text-align:center;
+                                    padding:40px;
+                                    color:#64748b;
+                                ">
+
+                                No faculty members found.
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                facultyList.forEach(
+                    function (faculty) {
+
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        row.innerHTML = `
+
+                            <td
+                                style="
+                                    padding:15px;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+
+                                ${faculty.id}
+
+                            </td>
+
+
+                            <td
+                                style="
+                                    padding:15px;
+                                    border-bottom:1px solid #e5e7eb;
+                                    font-weight:600;
+                                ">
+
+                                ${escapeHtml(
+                                    faculty.name || "—"
+                                )}
+
+                            </td>
+
+
+                            <td
+                                style="
+                                    padding:15px;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+
+                                ${escapeHtml(
+                                    faculty.department || "—"
+                                )}
+
+                            </td>
+
+
+                            <td
+                                style="
+                                    padding:15px;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+
+                                ${escapeHtml(
+                                    faculty.email || "—"
+                                )}
+
+                            </td>
+
+                        `;
+
+
+                        table.appendChild(row);
+
+                    }
+                );
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error loading faculty:",
+                    error
+                );
+
+
+                table.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            style="
+                                text-align:center;
+                                padding:40px;
+                                color:#dc2626;
+                            ">
+
+                            Unable to load faculty.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // ==================================================
+        // ADD FACULTY
+        // ==================================================
+
+        async function addFaculty(event) {
+
+
+            event.preventDefault();
+
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+
+            const name =
+                document.getElementById(
+                    "facultyName"
+                ).value.trim();
+
+
+            const department =
+                document.getElementById(
+                    "department"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+
+            message.textContent =
+                "Adding faculty...";
+
+            message.style.color =
+                "#2563eb";
+
+
+
+            const facultyData = {
+
+                name: name,
+
+                department: department,
+
+                email: email
+
+            };
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/faculty",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    facultyData
+                                )
+
+                        }
+                    );
+
+
+
+                const result =
+                    await response.json();
+
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Failed to add faculty"
+                    );
+
+                }
+
+
+
+                message.textContent =
+                    "Faculty added successfully!";
+
+                message.style.color =
+                    "#15803d";
+
+
+
+                document
+                    .getElementById(
+                        "facultyForm"
+                    )
+                    .reset();
+
+
+
+                // Reload faculty table
+
+                loadFaculty();
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Faculty creation error:",
+                    error
+                );
+
+
+                message.textContent =
+                    error.message ||
+                    "Something went wrong.";
+
+                message.style.color =
+                    "#dc2626";
+
+            }
+
+        }
+
+
+
+        // ==================================================
+        // HTML ESCAPE
+        // ==================================================
+
+        function escapeHtml(value) {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value;
+
+
+            return div.innerHTML;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

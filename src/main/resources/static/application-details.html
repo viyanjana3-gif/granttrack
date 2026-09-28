@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>GrantTrack - Application Details</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                G
+            </div>
+
+            <div>
+
+                <h2>GrantTrack</h2>
+
+                <span>Grant Management</span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/index.html" class="nav-item">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+
+            <a href="/applications.html" class="nav-item active">
+                <span>▤</span>
+                Applications
+            </a>
+
+
+            <a href="/faculty.html" class="nav-item">
+                <span>♙</span>
+                Faculty
+            </a>
+
+
+            <a href="/stages.html" class="nav-item">
+                <span>◈</span>
+                Grant Stages
+            </a>
+
+
+            <a href="/expenditures.html" class="nav-item">
+                <span>₹</span>
+                Expenditures
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome-text">
+                    Grant Management
+                </p>
+
+                <h1>
+                    Application Details
+                </h1>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+
+                <div class="profile-info">
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Grant Manager
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= APPLICATION ================= -->
+
+        <section class="overview-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        APPLICATION
+                    </p>
+
+                    <h2 id="applicationTitle">
+                        Loading...
+                    </h2>
+
+                </div>
+
+
+                <button
+                    onclick="window.location.href='/applications.html'"
+                    style="
+                        background:#e5e7eb;
+                        color:#374151;
+                        border:none;
+                        padding:10px 18px;
+                        border-radius:8px;
+                        cursor:pointer;
+                    ">
+
+                    ← Back
+
+                </button>
+
+            </div>
+
+
+
+            <div class="dashboard-cards">
+
+
+                <div class="stat-card">
+
+                    <div class="card-icon blue">
+                        ₹
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Requested Amount
+                        </p>
+
+                        <h2 id="requestedAmount">
+                            ₹0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="card-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Approved Amount
+                        </p>
+
+                        <h2 id="approvedAmount">
+                            ₹0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="card-icon purple">
+                        ●
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Current Status
+                        </p>
+
+                        <h2 id="currentStatus">
+                            -
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= DETAILS ================= -->
+
+            <div class="info-panel">
+
+                <p class="section-label">
+                    PROJECT DETAILS
+                </p>
+
+                <h2>
+                    Application Information
+                </h2>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        line-height:2;
+                    ">
+
+                    <p>
+                        <strong>Faculty:</strong>
+                        <span id="facultyName">
+                            -
+                        </span>
+                    </p>
+
+
+                    <p>
+                        <strong>Department:</strong>
+                        <span id="facultyDepartment">
+                            -
+                        </span>
+                    </p>
+
+
+                    <p>
+                        <strong>Email:</strong>
+                        <span id="facultyEmail">
+                            -
+                        </span>
+                    </p>
+
+
+                    <p>
+                        <strong>Abstract:</strong>
+                    </p>
+
+
+                    <p
+                        id="abstractText"
+                        style="
+                            color:#64748b;
+                            line-height:1.7;
+                        ">
+
+                        -
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= STATUS UPDATE ================= -->
+
+            <div
+                class="info-panel"
+                style="margin-top:25px;">
+
+
+                <p class="section-label">
+                    WORKFLOW
+                </p>
+
+                <h2>
+                    Update Application Status
+                </h2>
+
+
+
+                <form
+                    id="statusForm"
+                    style="margin-top:20px;">
+
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Application Status
+                        </label>
+
+
+                        <select
+                            id="status"
+                            required>
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="SUBMITTED">
+                                SUBMITTED
+                            </option>
+
+                            <option value="UNDER_REVIEW">
+                                UNDER REVIEW
+                            </option>
+
+                            <option value="APPROVED">
+                                APPROVED
+                            </option>
+
+                            <option value="REJECTED">
+                                REJECTED
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div
+                        class="form-group"
+                        id="approvedAmountGroup"
+                        style="display:none;">
+
+                        <label for="newApprovedAmount">
+                            Approved Amount (₹)
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="newApprovedAmount"
+                            min="1"
+                            step="0.01"
+                            placeholder="Enter approved amount">
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        style="
+                            margin-top:15px;
+                            background:#2563eb;
+                            color:white;
+                            border:none;
+                            padding:12px 24px;
+                            border-radius:8px;
+                            cursor:pointer;
+                            font-weight:600;
+                        ">
+
+                        Update Status
+
+                    </button>
+
+
+                    <div
+                        id="statusMessage"
+                        style="
+                            margin-top:15px;
+                            font-weight:600;
+                        ">
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+        </section>
+
+
+
+        <footer>
+
+            <span>
+                GrantTrack © 2026
+            </span>
+
+            <span>
+                Grant Management System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const applicationId =
+            params.get("id");
+
+
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                if (!applicationId) {
+
+                    document.getElementById(
+                        "applicationTitle"
+                    ).textContent =
+                        "Application ID missing";
+
+                    return;
+
+                }
+
+
+                loadApplication();
+
+            }
+        );
+
+
+
+        async function loadApplication() {
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/applications/" +
+                        applicationId
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Application not found"
+                    );
+
+                }
+
+
+                const application =
+                    await response.json();
+
+
+
+                document.getElementById(
+                    "applicationTitle"
+                ).textContent =
+                    application.title || "Untitled";
+
+
+
+                document.getElementById(
+                    "requestedAmount"
+                ).textContent =
+                    formatCurrency(
+                        application.requestedAmount
+                    );
+
+
+
+                document.getElementById(
+                    "approvedAmount"
+                ).textContent =
+                    formatCurrency(
+                        application.approvedAmount
+                    );
+
+
+
+                document.getElementById(
+                    "currentStatus"
+                ).textContent =
+                    application.status ||
+                    "SUBMITTED";
+
+
+
+                document.getElementById(
+                    "abstractText"
+                ).textContent =
+                    application.abstractText ||
+                    "No abstract available";
+
+
+
+                if (application.faculty) {
+
+
+                    document.getElementById(
+                        "facultyName"
+                    ).textContent =
+                        application.faculty.name ||
+                        "-";
+
+
+                    document.getElementById(
+                        "facultyDepartment"
+                    ).textContent =
+                        application.faculty.department ||
+                        "-";
+
+
+                    document.getElementById(
+                        "facultyEmail"
+                    ).textContent =
+                        application.faculty.email ||
+                        "-";
+
+                }
+
+
+            } catch (error) {
+
+
+                console.error(error);
+
+
+                document.getElementById(
+                    "applicationTitle"
+                ).textContent =
+                    "Unable to load application";
+
+            }
+
+        }
+
+
+
+        document.getElementById(
+            "status"
+        ).addEventListener(
+            "change",
+            function () {
+
+
+                const group =
+                    document.getElementById(
+                        "approvedAmountGroup"
+                    );
+
+
+                if (
+                    this.value === "APPROVED"
+                ) {
+
+                    group.style.display =
+                        "block";
+
+                    document.getElementById(
+                        "newApprovedAmount"
+                    ).required = true;
+
+                }
+                else {
+
+                    group.style.display =
+                        "none";
+
+                    document.getElementById(
+                        "newApprovedAmount"
+                    ).required = false;
+
+                }
+
+            }
+        );
+
+
+
+        document.getElementById(
+            "statusForm"
+        ).addEventListener(
+            "submit",
+            updateStatus
+        );
+
+
+
+        async function updateStatus(event) {
+
+
+            event.preventDefault();
+
+
+            const status =
+                document.getElementById(
+                    "status"
+                ).value;
+
+
+            const approvedAmount =
+                document.getElementById(
+                    "newApprovedAmount"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "statusMessage"
+                );
+
+
+            message.textContent =
+                "Updating status...";
+
+
+            message.style.color =
+                "#2563eb";
+
+
+
+            let url =
+                "/api/applications/" +
+                applicationId +
+                "/status?status=" +
+                encodeURIComponent(status);
+
+
+
+            if (
+                status === "APPROVED"
+            ) {
+
+                url +=
+                    "&approvedAmount=" +
+                    encodeURIComponent(
+                        approvedAmount
+                    );
+
+            }
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            method: "PUT"
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to update status"
+                    );
+
+                }
+
+
+                message.textContent =
+                    "Application status updated successfully!";
+
+
+                message.style.color =
+                    "#15803d";
+
+
+                loadApplication();
+
+
+            } catch (error) {
+
+
+                console.error(error);
+
+
+                message.textContent =
+                    error.message ||
+                    "Something went wrong";
+
+
+                message.style.color =
+                    "#dc2626";
+
+            }
+
+        }
+
+
+
+        function formatCurrency(amount) {
+
+
+            if (
+                amount === null ||
+                amount === undefined
+            ) {
+
+                return "₹0";
+
+            }
+
+
+            return "₹" +
+                Number(amount).toLocaleString(
+                    "en-IN"
+                );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

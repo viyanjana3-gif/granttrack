@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GrantTrack - Grant Stages</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">G</div>
+
+            <div>
+                <h2>GrantTrack</h2>
+                <span>Grant Management</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="/index.html" class="nav-item">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="/applications.html" class="nav-item">
+                <span>▤</span>
+                Applications
+            </a>
+
+            <a href="/faculty.html" class="nav-item">
+                <span>♙</span>
+                Faculty
+            </a>
+
+            <a href="/stages.html" class="nav-item active">
+                <span>◈</span>
+                Grant Stages
+            </a>
+
+            <a href="/expenditures.html" class="nav-item">
+                <span>₹</span>
+                Expenditures
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                System Online
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- ================= TOP BAR ================= -->
+
+        <header class="topbar">
+
+            <div>
+                <p class="welcome-text">
+                    Grant Management
+                </p>
+
+                <h1>
+                    Grant Stages
+                </h1>
+            </div>
+
+            <div class="profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+                    <strong>Administrator</strong>
+                    <span>Grant Manager</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= ADD STAGE ================= -->
+
+        <section class="overview-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        GRANT WORKFLOW
+                    </p>
+
+                    <h2>
+                        Add Grant Stage
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-panel">
+
+                <form id="stageForm">
+
+                    <!-- APPLICATION -->
+
+                    <div class="form-group">
+
+                        <label for="applicationId">
+                            Select Application
+                        </label>
+
+                        <select
+                            id="applicationId"
+                            required>
+
+                            <option value="">
+                                Loading applications...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- STAGE -->
+
+                    <div class="form-group">
+
+                        <label for="stageName">
+                            Stage
+                        </label>
+
+                        <select
+                            id="stageName"
+                            required>
+
+                            <option value="">
+                                Select Stage
+                            </option>
+
+                            <option value="SUBMITTED">
+                                SUBMITTED
+                            </option>
+
+                            <option value="UNDER_REVIEW">
+                                UNDER REVIEW
+                            </option>
+
+                            <option value="APPROVED">
+                                APPROVED
+                            </option>
+
+                            <option value="REJECTED">
+                                REJECTED
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- REMARKS -->
+
+                    <div class="form-group">
+
+                        <label for="remarks">
+                            Remarks
+                        </label>
+
+                        <textarea
+                            id="remarks"
+                            rows="4"
+                            placeholder="Enter remarks about this stage"></textarea>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="form-group">
+
+                        <label for="stageDate">
+                            Stage Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="stageDate"
+                            required>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        type="submit"
+                        style="
+                            margin-top:15px;
+                            background:#2563eb;
+                            color:white;
+                            border:none;
+                            padding:12px 24px;
+                            border-radius:8px;
+                            cursor:pointer;
+                            font-weight:600;
+                        ">
+
+                        Add Stage
+
+                    </button>
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="message"
+                        style="
+                            margin-top:15px;
+                            font-weight:600;
+                        ">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STAGE HISTORY ================= -->
+
+        <section class="overview-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        HISTORY
+                    </p>
+
+                    <h2>
+                        Grant Stage History
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-panel">
+
+                <div style="overflow-x:auto;">
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                        ">
+
+                        <thead>
+
+                            <tr>
+
+                                <th style="
+                                    padding:15px;
+                                    text-align:left;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+                                    ID
+                                </th>
+
+                                <th style="
+                                    padding:15px;
+                                    text-align:left;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+                                    Stage
+                                </th>
+
+                                <th style="
+                                    padding:15px;
+                                    text-align:left;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+                                    Date
+                                </th>
+
+                                <th style="
+                                    padding:15px;
+                                    text-align:left;
+                                    border-bottom:1px solid #e5e7eb;
+                                ">
+                                    Remarks
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="stageTableBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    style="
+                                        text-align:center;
+                                        padding:30px;
+                                    ">
+
+                                    Loading stages...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <span>
+                GrantTrack © 2026
+            </span>
+
+            <span>
+                Grant Management System
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        // ==================================================
+        // PAGE LOAD
+        // ==================================================
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            setToday();
+
+            loadApplications();
+
+            loadStages();
+
+            document
+                .getElementById("stageForm")
+                .addEventListener("submit", addStage);
+
+        });
+
+
+        // ==================================================
+        // SET TODAY'S DATE
+        // ==================================================
+
+        function setToday() {
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+            document.getElementById("stageDate").value = today;
+        }
+
+
+        // ==================================================
+        // LOAD APPLICATIONS
+        // ==================================================
+
+        async function loadApplications() {
+
+            const select =
+                document.getElementById("applicationId");
+
+            try {
+
+                const response =
+                    await fetch("/api/applications");
+
+                if (!response.ok) {
+                    throw new Error("Unable to load applications");
+                }
+
+                const applications =
+                    await response.json();
+
+                select.innerHTML = "";
+
+                const defaultOption =
+                    document.createElement("option");
+
+                defaultOption.value = "";
+                defaultOption.textContent =
+                    "Select Application";
+
+                select.appendChild(defaultOption);
+
+
+                if (
+                    !Array.isArray(applications) ||
+                    applications.length === 0
+                ) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = "";
+                    option.textContent =
+                        "No applications found";
+
+                    select.appendChild(option);
+
+                    return;
+                }
+
+
+                applications.forEach(function (application) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        application.id;
+
+                    option.textContent =
+                        "#" +
+                        application.id +
+                        " - " +
+                        (
+                            application.title ||
+                            "Untitled Application"
+                        );
+
+                    select.appendChild(option);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Application loading error:",
+                    error
+                );
+
+                select.innerHTML = `
+                    <option value="">
+                        Unable to load applications
+                    </option>
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // LOAD STAGES
+        // ==================================================
+
+        async function loadStages() {
+
+            const table =
+                document.getElementById(
+                    "stageTableBody"
+                );
+
+            try {
+
+                const response =
+                    await fetch("/api/stages");
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Unable to load stages"
+                    );
+                }
+
+                const stages =
+                    await response.json();
+
+                table.innerHTML = "";
+
+
+                if (
+                    !Array.isArray(stages) ||
+                    stages.length === 0
+                ) {
+
+                    table.innerHTML = `
+                        <tr>
+                            <td
+                                colspan="4"
+                                style="
+                                    text-align:center;
+                                    padding:40px;
+                                    color:#64748b;
+                                ">
+
+                                No grant stages found.
+
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+
+                stages.forEach(function (stage) {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    row.innerHTML = `
+
+                        <td style="
+                            padding:15px;
+                            border-bottom:1px solid #e5e7eb;
+                        ">
+                            ${stage.id ?? "-"}
+                        </td>
+
+                        <td style="
+                            padding:15px;
+                            border-bottom:1px solid #e5e7eb;
+                            font-weight:600;
+                        ">
+                            ${stage.stageName ?? "-"}
+                        </td>
+
+                        <td style="
+                            padding:15px;
+                            border-bottom:1px solid #e5e7eb;
+                        ">
+                            ${stage.stageDate ?? "-"}
+                        </td>
+
+                        <td style="
+                            padding:15px;
+                            border-bottom:1px solid #e5e7eb;
+                        ">
+                            ${stage.remarks ?? "-"}
+                        </td>
+
+                    `;
+
+                    table.appendChild(row);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Stage loading error:",
+                    error
+                );
+
+                table.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="4"
+                            style="
+                                text-align:center;
+                                padding:40px;
+                                color:#dc2626;
+                            ">
+
+                            Unable to load stage history.
+
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // ADD STAGE
+        // ==================================================
+
+        async function addStage(event) {
+
+            event.preventDefault();
+
+
+            const applicationId =
+                document.getElementById(
+                    "applicationId"
+                ).value;
+
+            const stageName =
+                document.getElementById(
+                    "stageName"
+                ).value;
+
+            const remarks =
+                document.getElementById(
+                    "remarks"
+                ).value;
+
+            const stageDate =
+                document.getElementById(
+                    "stageDate"
+                ).value;
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+
+            // Validate application
+
+            if (!applicationId) {
+
+                message.textContent =
+                    "Please select an application.";
+
+                message.style.color =
+                    "#dc2626";
+
+                return;
+            }
+
+
+            // Validate stage
+
+            if (!stageName) {
+
+                message.textContent =
+                    "Please select a stage.";
+
+                message.style.color =
+                    "#dc2626";
+
+                return;
+            }
+
+
+            // Validate date
+
+            if (!stageDate) {
+
+                message.textContent =
+                    "Please select a stage date.";
+
+                message.style.color =
+                    "#dc2626";
+
+                return;
+            }
+
+
+            // Create request body
+
+            const stageData = {
+
+                stageName: stageName,
+
+                remarks: remarks,
+
+                stageDate: stageDate
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/stages/application/" +
+                        applicationId,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    stageData
+                                )
+
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        errorText ||
+                        "Failed to add stage"
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+                console.log(
+                    "Stage created:",
+                    result
+                );
+
+
+                // Success message
+
+                message.textContent =
+                    "Grant stage added successfully!";
+
+                message.style.color =
+                    "#16a34a";
+
+
+                // Reset stage fields
+
+                document.getElementById(
+                    "stageName"
+                ).value = "";
+
+                document.getElementById(
+                    "remarks"
+                ).value = "";
+
+
+                setToday();
+
+
+                // Reload history
+
+                loadStages();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Add stage error:",
+                    error
+                );
+
+                message.textContent =
+                    "Failed to add grant stage.";
+
+                message.style.color =
+                    "#dc2626";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

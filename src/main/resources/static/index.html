@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GrantTrack - Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                G
+            </div>
+
+            <div>
+                <h2>GrantTrack</h2>
+                <span>Grant Management</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <!-- Dashboard -->
+            <a href="index.html"
+               class="nav-item active">
+
+                <span>▣</span>
+                Dashboard
+
+            </a>
+
+
+            <!-- Applications -->
+            <a href="applications.html"
+               class="nav-item">
+
+                <span>▤</span>
+                Applications
+
+            </a>
+
+
+            <!-- Faculty -->
+            <a href="faculty.html"
+               class="nav-item">
+
+                <span>♙</span>
+                Faculty
+
+            </a>
+
+
+            <!-- Grant Stages -->
+            <a href="stages.html"
+               class="nav-item">
+
+                <span>◈</span>
+                Grant Stages
+
+            </a>
+
+
+            <!-- Expenditures -->
+            <a href="expenditures.html"
+               class="nav-item">
+
+                <span>₹</span>
+                Expenditures
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome-text">
+                    Welcome back
+                </p>
+
+                <h1>
+                    Dashboard Overview
+                </h1>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+
+                <div class="profile-info">
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Grant Manager
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= DASHBOARD CARDS ================= -->
+
+        <section class="dashboard-cards">
+
+
+            <!-- Total Applications -->
+
+            <div class="stat-card">
+
+                <div class="card-icon blue">
+                    ▣
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Applications
+                    </p>
+
+                    <h2 id="totalApplications">
+                        0
+                    </h2>
+
+                    <span>
+                        All submitted applications
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Approved Applications -->
+
+            <div class="stat-card">
+
+                <div class="card-icon green">
+                    ✓
+                </div>
+
+                <div>
+
+                    <p>
+                        Approved Applications
+                    </p>
+
+                    <h2 id="approvedApplications">
+                        0
+                    </h2>
+
+                    <span>
+                        Successfully approved
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Rejected Applications -->
+
+            <div class="stat-card">
+
+                <div class="card-icon red">
+                    !
+                </div>
+
+                <div>
+
+                    <p>
+                        Rejected Applications
+                    </p>
+
+                    <h2 id="rejectedApplications">
+                        0
+                    </h2>
+
+                    <span>
+                        Rejected applications
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Approved Grant -->
+
+            <div class="stat-card">
+
+                <div class="card-icon purple">
+                    ₹
+                </div>
+
+                <div>
+
+                    <p>
+                        Approved Grant
+                    </p>
+
+                    <h2 id="totalApprovedGrant">
+                        ₹0
+                    </h2>
+
+                    <span>
+                        Total approved funding
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= FINANCIAL OVERVIEW ================= -->
+
+        <section class="overview-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        FINANCIAL OVERVIEW
+                    </p>
+
+                    <h2>
+                        Grant Utilization
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="financial-grid">
+
+
+                <!-- Approved Grant -->
+
+                <div class="financial-card">
+
+                    <div class="financial-title">
+
+                        <span>
+                            Total Approved Grant
+                        </span>
+
+                        <span class="small-icon">
+                            ₹
+                        </span>
+
+                    </div>
+
+
+                    <h2 id="grantAmount">
+                        ₹0
+                    </h2>
+
+
+                    <div class="progress-background">
+
+                        <div
+                            class="progress-bar"
+                            id="grantProgress">
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        Approved funding available
+                    </p>
+
+                </div>
+
+
+
+                <!-- Expenditure -->
+
+                <div class="financial-card">
+
+                    <div class="financial-title">
+
+                        <span>
+                            Total Expenditure
+                        </span>
+
+                        <span class="small-icon">
+                            ↗
+                        </span>
+
+                    </div>
+
+
+                    <h2 id="expenditureAmount">
+                        ₹0
+                    </h2>
+
+
+                    <div class="progress-background">
+
+                        <div
+                            class="progress-bar expenditure-progress"
+                            id="expenditureProgress">
+                        </div>
+
+                    </div>
+
+
+                    <p id="utilizationText">
+                        0% utilized
+                    </p>
+
+                </div>
+
+
+
+                <!-- Remaining Grant -->
+
+                <div class="financial-card">
+
+                    <div class="financial-title">
+
+                        <span>
+                            Remaining Grant
+                        </span>
+
+                        <span class="small-icon">
+                            ✓
+                        </span>
+
+                    </div>
+
+
+                    <h2 id="remainingAmount">
+                        ₹0
+                    </h2>
+
+
+                    <p class="remaining-text">
+                        Amount available for utilization
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= APPLICATION STATUS ================= -->
+
+        <section class="bottom-grid">
+
+
+            <div class="info-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            APPLICATION STATUS
+                        </p>
+
+                        <h2>
+                            Current Overview
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status-row">
+
+
+                    <div class="status-item">
+
+                        <span class="status-circle blue-circle"></span>
+
+                        <div>
+
+                            <strong id="applicationCount">
+                                0
+                            </strong>
+
+                            <p>
+                                Total Applications
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="status-item">
+
+                        <span class="status-circle green-circle"></span>
+
+                        <div>
+
+                            <strong id="approvedCount">
+                                0
+                            </strong>
+
+                            <p>
+                                Approved
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="status-item">
+
+                        <span class="status-circle red-circle"></span>
+
+                        <div>
+
+                            <strong id="rejectedCount">
+                                0
+                            </strong>
+
+                            <p>
+                                Rejected
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+
+            <div class="info-panel quick-actions">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            QUICK ACTIONS
+                        </p>
+
+                        <h2>
+                            Manage Grants
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="action-buttons">
+
+
+                    <button
+                        onclick="openNewApplication()">
+
+                        + New Application
+
+                    </button>
+
+
+                    <button
+                        onclick="openExpenditures()">
+
+                        + Add Expenditure
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <span>
+                GrantTrack © 2026
+            </span>
+
+            <span>
+                Grant Management System
+            </span>
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadDashboard
+        );
+
+
+        // ==========================================
+        // LOAD DASHBOARD DATA
+        // ==========================================
+
+        async function loadDashboard() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/applications"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load applications"
+                    );
+
+                }
+
+
+                const applications =
+                    await response.json();
+
+
+                calculateDashboard(
+                    applications
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Dashboard error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        // ==========================================
+        // CALCULATE DASHBOARD
+        // ==========================================
+
+        function calculateDashboard(
+            applications
+        ) {
+
+            if (!Array.isArray(applications)) {
+
+                applications = [];
+
+            }
+
+
+            // Total applications
+
+            const total =
+                applications.length;
+
+
+
+            // Approved applications
+
+            const approved =
+                applications.filter(
+                    app =>
+                        app.status &&
+                        app.status
+                            .toUpperCase() ===
+                        "APPROVED"
+                ).length;
+
+
+
+            // Rejected applications
+
+            const rejected =
+                applications.filter(
+                    app =>
+                        app.status &&
+                        app.status
+                            .toUpperCase() ===
+                        "REJECTED"
+                ).length;
+
+
+
+            // ======================================
+            // TOTAL APPROVED GRANT
+            // ======================================
+
+            let approvedGrant = 0;
+
+
+            applications.forEach(
+                app => {
+
+                    if (
+                        app.status &&
+                        app.status
+                            .toUpperCase() ===
+                        "APPROVED"
+                    ) {
+
+                        approvedGrant +=
+                            Number(
+                                app.approvedAmount || 0
+                            );
+
+                    }
+
+                }
+            );
+
+
+
+            // ======================================
+            // TOTAL EXPENDITURE
+            // ======================================
+
+            let totalExpenditure = 0;
+
+
+            applications.forEach(
+                app => {
+
+                    if (
+                        Array.isArray(
+                            app.expenditures
+                        )
+                    ) {
+
+                        app.expenditures.forEach(
+                            expenditure => {
+
+                                totalExpenditure +=
+                                    Number(
+                                        expenditure.amount || 0
+                                    );
+
+                            }
+                        );
+
+                    }
+
+                }
+            );
+
+
+
+            // ======================================
+            // REMAINING GRANT
+            // ======================================
+
+            let remaining =
+                approvedGrant -
+                totalExpenditure;
+
+
+            if (remaining < 0) {
+
+                remaining = 0;
+
+            }
+
+
+
+            // ======================================
+            // UTILIZATION
+            // ======================================
+
+            let utilization = 0;
+
+
+            if (approvedGrant > 0) {
+
+                utilization =
+                    (
+                        totalExpenditure /
+                        approvedGrant
+                    ) * 100;
+
+            }
+
+
+            if (utilization > 100) {
+
+                utilization = 100;
+
+            }
+
+
+
+            // ======================================
+            // UPDATE DASHBOARD
+            // ======================================
+
+            document.getElementById(
+                "totalApplications"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "approvedApplications"
+            ).textContent =
+                approved;
+
+
+            document.getElementById(
+                "rejectedApplications"
+            ).textContent =
+                rejected;
+
+
+            document.getElementById(
+                "totalApprovedGrant"
+            ).textContent =
+                formatCurrency(
+                    approvedGrant
+                );
+
+
+
+            // ======================================
+            // FINANCIAL SECTION
+            // ======================================
+
+            document.getElementById(
+                "grantAmount"
+            ).textContent =
+                formatCurrency(
+                    approvedGrant
+                );
+
+
+            document.getElementById(
+                "expenditureAmount"
+            ).textContent =
+                formatCurrency(
+                    totalExpenditure
+                );
+
+
+            document.getElementById(
+                "remainingAmount"
+            ).textContent =
+                formatCurrency(
+                    remaining
+                );
+
+
+            document.getElementById(
+                "utilizationText"
+            ).textContent =
+                utilization.toFixed(1) +
+                "% utilized";
+
+
+
+            // ======================================
+            // PROGRESS BARS
+            // ======================================
+
+            document.getElementById(
+                "grantProgress"
+            ).style.width =
+                approvedGrant > 0
+                    ? "100%"
+                    : "0%";
+
+
+            document.getElementById(
+                "expenditureProgress"
+            ).style.width =
+                utilization + "%";
+
+
+
+            // ======================================
+            // APPLICATION STATUS
+            // ======================================
+
+            document.getElementById(
+                "applicationCount"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "approvedCount"
+            ).textContent =
+                approved;
+
+
+            document.getElementById(
+                "rejectedCount"
+            ).textContent =
+                rejected;
+
+        }
+
+
+
+        // ==========================================
+        // FORMAT CURRENCY
+        // ==========================================
+
+        function formatCurrency(amount) {
+
+            return "₹" +
+                Number(
+                    amount || 0
+                ).toLocaleString(
+                    "en-IN"
+                );
+
+        }
+
+
+
+        // ==========================================
+        // QUICK ACTIONS
+        // ==========================================
+
+        function openNewApplication() {
+
+            window.location.href =
+                "new-application.html";
+
+        }
+
+
+        function openExpenditures() {
+
+            window.location.href =
+                "expenditures.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
