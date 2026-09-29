@@ -602,9 +602,18 @@
                 const applications =
                     await response.json();
 
+                const dashboardResponse =
+                    await fetch("/api/dashboard");
+
+                if (!dashboardResponse.ok) {
+                    throw new Error("Unable to load dashboard totals");
+                }
+
+                const dashboard = await dashboardResponse.json();
 
                 calculateDashboard(
-                    applications
+                    applications,
+                    dashboard
                 );
 
 
@@ -626,7 +635,8 @@
         // ==========================================
 
         function calculateDashboard(
-            applications
+            applications,
+            dashboard
         ) {
 
             if (!Array.isArray(applications)) {
@@ -673,28 +683,8 @@
             // TOTAL APPROVED GRANT
             // ======================================
 
-            let approvedGrant = 0;
-
-
-            applications.forEach(
-                app => {
-
-                    if (
-                        app.status &&
-                        app.status
-                            .toUpperCase() ===
-                        "APPROVED"
-                    ) {
-
-                        approvedGrant +=
-                            Number(
-                                app.approvedAmount || 0
-                            );
-
-                    }
-
-                }
-            );
+            const approvedGrant =
+                Number(dashboard.totalApprovedGrant || 0);
 
 
 
@@ -702,33 +692,8 @@
             // TOTAL EXPENDITURE
             // ======================================
 
-            let totalExpenditure = 0;
-
-
-            applications.forEach(
-                app => {
-
-                    if (
-                        Array.isArray(
-                            app.expenditures
-                        )
-                    ) {
-
-                        app.expenditures.forEach(
-                            expenditure => {
-
-                                totalExpenditure +=
-                                    Number(
-                                        expenditure.amount || 0
-                                    );
-
-                            }
-                        );
-
-                    }
-
-                }
-            );
+            const totalExpenditure =
+                Number(dashboard.totalExpenditure || 0);
 
 
 
@@ -736,16 +701,8 @@
             // REMAINING GRANT
             // ======================================
 
-            let remaining =
-                approvedGrant -
-                totalExpenditure;
-
-
-            if (remaining < 0) {
-
-                remaining = 0;
-
-            }
+            const remaining =
+                Number(dashboard.totalRemainingGrant || 0);
 
 
 
@@ -765,14 +722,6 @@
                     ) * 100;
 
             }
-
-
-            if (utilization > 100) {
-
-                utilization = 100;
-
-            }
-
 
 
             // ======================================
@@ -857,7 +806,7 @@
             document.getElementById(
                 "expenditureProgress"
             ).style.width =
-                utilization + "%";
+                Math.min(utilization, 100) + "%";
 
 
 
@@ -924,6 +873,7 @@
 
     </script>
 
+    <script src="/auth.js"></script>
 </body>
 
 </html>

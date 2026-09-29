@@ -1,1112 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>GrantTrack - Expenditures</title>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-
-    <!-- ================= SIDEBAR ================= -->
-
     <aside class="sidebar">
-
         <div class="logo">
-
-            <div class="logo-icon">
-                G
-            </div>
-
+            <div class="logo-icon">G</div>
             <div>
-
                 <h2>GrantTrack</h2>
-
                 <span>Grant Management</span>
-
             </div>
-
         </div>
-
-
         <nav>
-
-            <a href="/index.html" class="nav-item">
-                <span>▣</span>
-                Dashboard
-            </a>
-
-            <a href="/applications.html" class="nav-item">
-                <span>▤</span>
-                Applications
-            </a>
-
-            <a href="/faculty.html" class="nav-item">
-                <span>♙</span>
-                Faculty
-            </a>
-
-            <a href="/stages.html" class="nav-item">
-                <span>◈</span>
-                Grant Stages
-            </a>
-
-            <a href="/expenditures.html" class="nav-item active">
-                <span>₹</span>
-                Expenditures
-            </a>
-
+            <a href="/applications.html" class="nav-item"><span>▤</span> My Applications</a>
+            <a href="/new-application.html" class="nav-item"><span>＋</span> New Application</a>
+            <a href="/expenditures.html" class="nav-item active"><span>₹</span> Expenditures</a>
         </nav>
-
-
         <div class="sidebar-bottom">
-
             <div class="system-status">
-
                 <span class="status-dot"></span>
-
                 System Online
-
             </div>
-
         </div>
-
     </aside>
-
-
-
-    <!-- ================= MAIN CONTENT ================= -->
 
     <main class="main-content">
 
-
-        <!-- ================= TOP BAR ================= -->
-
         <header class="topbar">
-
             <div>
-
-                <p class="welcome-text">
-                    Grant Management
-                </p>
-
-                <h1>
-                    Expenditures
-                </h1>
-
+                <p class="welcome-text">Grant Management</p>
+                <h1 id="pageTitle">Expenditures</h1>
             </div>
-
-
             <div class="profile">
-
-                <div class="notification">
-                    🔔
-                </div>
-
-                <div class="profile-avatar">
-                    A
-                </div>
-
+                <div class="notification">🔔</div>
+                <div class="profile-avatar">A</div>
                 <div class="profile-info">
-
-                    <strong>
-                        Administrator
-                    </strong>
-
-                    <span>
-                        Grant Manager
-                    </span>
-
+                    <strong>Administrator</strong>
+                    <span>Grant Manager</span>
                 </div>
-
             </div>
-
         </header>
 
-
-
-        <!-- ================= ADD EXPENDITURE ================= -->
-
-        <section class="overview-section">
-
-
-            <div class="section-header">
-
-                <div>
-
-                    <p class="section-label">
-                        FINANCIAL MANAGEMENT
-                    </p>
-
-                    <h2>
-                        Add Expenditure
-                    </h2>
-
+        <!-- ADMIN CONTACT BANNER — faculty only -->
+        <div id="adminInfoBanner" hidden style="margin:24px 24px 0;padding:16px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;display:flex;align-items:flex-start;gap:16px;">
+            <div style="font-size:26px;line-height:1;">🏛️</div>
+            <div>
+                <p style="margin:0 0 4px;font-weight:700;color:#1e40af;font-size:15px;">Grant Administration Office</p>
+                <p style="margin:0 0 6px;color:#374151;font-size:13px;">For queries about approval, budget changes, or grant policies, contact the administrator:</p>
+                <div style="display:flex;flex-wrap:wrap;gap:18px;font-size:13px;">
+                    <span style="color:#1e40af;font-weight:600;">👤 Administrator</span>
+                    <span style="color:#374151;">📧 <a href="mailto:admin@granttrack.edu" style="color:#2563eb;">admin@granttrack.edu</a></span>
+                    <span style="color:#374151;">📞 +91-XXXX-XXXXXX</span>
+                    <span style="color:#374151;">🕐 Mon–Fri, 9 AM – 5 PM</span>
                 </div>
+            </div>
+        </div>
 
+        <!-- BUDGET SUMMARY CARDS — shown after application is selected -->
+        <div id="budgetCards" hidden style="margin:24px 24px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            <div class="stat-card">
+                <div class="card-icon green">✓</div>
+                <div><p>Approved Budget</p><h2 id="cardApproved">—</h2></div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon blue">₹</div>
+                <div><p>Total Spent</p><h2 id="cardSpent">—</h2></div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon purple">◎</div>
+                <div><p>Remaining</p><h2 id="cardRemaining">—</h2></div>
+            </div>
+        </div>
+
+        <!-- ADD EXPENDITURE FORM -->
+        <section class="overview-section">
+            <div class="section-header">
+                <div>
+                    <p class="section-label">FINANCIAL MANAGEMENT</p>
+                    <h2>Add Expenditure</h2>
+                </div>
             </div>
 
-
             <div class="info-panel">
-
-
                 <form id="expenditureForm">
 
-
-                    <!-- APPLICATION -->
-
                     <div class="form-group">
-
-                        <label for="applicationId">
-                            Select Application
-                        </label>
-
-                        <select
-                            id="applicationId"
-                            required>
-
-                            <option value="">
-                                Loading applications...
-                            </option>
-
+                        <label for="applicationId">Select Approved Application</label>
+                        <select id="applicationId" required>
+                            <option value="">Loading applications...</option>
                         </select>
-
                     </div>
-
-
-
-                    <!-- DESCRIPTION -->
 
                     <div class="form-group">
-
-                        <label for="description">
-                            Description
-                        </label>
-
-                        <input
-                            type="text"
-                            id="description"
-                            placeholder="Example: Purchase of research equipment"
-                            required>
-
+                        <label for="description">Spent On</label>
+                        <input type="text" id="description"
+                            placeholder="e.g. Research equipment, Lab supplies, Travel" required>
                     </div>
-
-
-
-                    <!-- AMOUNT -->
 
                     <div class="form-group">
-
-                        <label for="amount">
-                            Amount (₹)
-                        </label>
-
-                        <input
-                            type="number"
-                            id="amount"
-                            min="1"
-                            step="0.01"
-                            placeholder="Enter expenditure amount"
-                            required>
-
+                        <label for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" min="0.01" step="0.01"
+                            placeholder="Enter expenditure amount" required>
                     </div>
-
-
-
-                    <!-- DATE -->
 
                     <div class="form-group">
-
-                        <label for="expenditureDate">
-                            Expenditure Date
-                        </label>
-
-                        <input
-                            type="date"
-                            id="expenditureDate"
-                            required>
-
+                        <label for="expenditureDate">Date</label>
+                        <input type="date" id="expenditureDate" required>
                     </div>
 
-
-
-                    <!-- BUTTONS -->
-
-                    <div
-                        style="
-                            margin-top:20px;
-                            display:flex;
-                            gap:12px;
-                        ">
-
-                        <button
-                            type="submit"
-                            style="
-                                background:#2563eb;
-                                color:white;
-                                border:none;
-                                padding:12px 24px;
-                                border-radius:8px;
-                                cursor:pointer;
-                                font-weight:600;
-                            ">
-
+                    <div style="margin-top:20px;display:flex;gap:12px;">
+                        <button type="submit" style="background:#2563eb;color:white;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:600;">
                             Add Expenditure
-
                         </button>
-
-
-                        <button
-                            type="reset"
-                            onclick="setTimeout(setToday, 0)"
-                            style="
-                                background:#e5e7eb;
-                                color:#374151;
-                                border:none;
-                                padding:12px 24px;
-                                border-radius:8px;
-                                cursor:pointer;
-                                font-weight:600;
-                            ">
-
+                        <button type="button" id="clearBtn" style="background:#e5e7eb;color:#374151;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:600;">
                             Clear
-
                         </button>
-
                     </div>
 
-
-
-                    <!-- MESSAGE -->
-
-                    <div
-                        id="message"
-                        style="
-                            margin-top:15px;
-                            font-weight:600;
-                        ">
-
-                    </div>
-
+                    <div id="message" style="margin-top:15px;font-weight:600;font-size:15px;"></div>
 
                 </form>
-
             </div>
-
         </section>
 
-
-
-        <!-- ================= EXPENDITURE HISTORY ================= -->
-
+        <!-- EXPENDITURE HISTORY -->
         <section class="overview-section">
-
-
             <div class="section-header">
-
                 <div>
-
-                    <p class="section-label">
-                        EXPENDITURE HISTORY
-                    </p>
-
-                    <h2>
-                        Grant Expenditures
-                    </h2>
-
+                    <p class="section-label">EXPENDITURE HISTORY</p>
+                    <h2 id="historyHeading">All Expenditures</h2>
                 </div>
-
             </div>
-
 
             <div class="info-panel">
-
-
                 <div style="overflow-x:auto;">
-
-
-                    <table
-                        style="
-                            width:100%;
-                            border-collapse:collapse;
-                        ">
-
-
+                    <table style="width:100%;border-collapse:collapse;">
                         <thead>
-
                             <tr>
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    ID
-                                </th>
-
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    Application
-                                </th>
-
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    Faculty
-                                </th>
-
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    Description
-                                </th>
-
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    Amount
-                                </th>
-
-
-                                <th style="
-                                    padding:15px;
-                                    text-align:left;
-                                    border-bottom:1px solid #e5e7eb;
-                                ">
-                                    Date
-                                </th>
-
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">ID</th>
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Application</th>
+                                <th class="col-faculty" style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Faculty</th>
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Spent On</th>
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Amount</th>
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Date</th>
+                                <th style="padding:14px 15px;text-align:left;border-bottom:1px solid #e5e7eb;color:#64748b;font-size:13px;">Status</th>
                             </tr>
-
                         </thead>
-
-
                         <tbody id="expenditureTableBody">
-
-                            <tr>
-
-                                <td
-                                    colspan="6"
-                                    style="
-                                        text-align:center;
-                                        padding:30px;
-                                    ">
-
-                                    Loading expenditures...
-
-                                </td>
-
-                            </tr>
-
+                            <tr><td colspan="7" style="text-align:center;padding:30px;">Loading...</td></tr>
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </section>
 
-
-
-        <!-- ================= FOOTER ================= -->
-
         <footer>
-
-            <span>
-                GrantTrack © 2026
-            </span>
-
-            <span>
-                Grant Management System
-            </span>
-
+            <span>GrantTrack © 2026</span>
+            <span>Grant Management System</span>
         </footer>
-
 
     </main>
 
-
-
-    <!-- ================= JAVASCRIPT ================= -->
-
+    <script src="/auth.js"></script>
     <script>
 
+        let currentUser = null;
+        // cache: appId -> utilization data
+        const utilizationCache = {};
 
-        // ==================================================
-        // PAGE LOAD
-        // ==================================================
+        function waitForUser(cb) {
+            if (window.grantTrackUser) cb(window.grantTrackUser);
+            else setTimeout(() => waitForUser(cb), 50);
+        }
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
+        waitForUser(function(user) {
+            currentUser = user;
 
-                setToday();
-
-                loadApplications();
-
-                loadExpenditures();
-
-                document
-                    .getElementById("expenditureForm")
-                    .addEventListener(
-                        "submit",
-                        addExpenditure
-                    );
-
+            if (user.role === "FACULTY") {
+                document.getElementById("pageTitle").textContent = "My Expenditures";
+                document.getElementById("historyHeading").textContent = "My Expenditure History";
+                document.getElementById("adminInfoBanner").hidden = false;
+                // Hide Faculty column — faculty only sees their own data
+                document.querySelectorAll(".col-faculty").forEach(el => el.hidden = true);
             }
-        );
 
+            setToday();
+            loadApplications();
+            loadExpenditures();
 
-
-        // ==================================================
-        // SET TODAY'S DATE
-        // ==================================================
+            document.getElementById("expenditureForm").addEventListener("submit", addExpenditure);
+            document.getElementById("applicationId").addEventListener("change", onApplicationChange);
+            document.getElementById("clearBtn").addEventListener("click", function() {
+                document.getElementById("expenditureForm").reset();
+                setToday();
+                document.getElementById("message").textContent = "";
+                document.getElementById("budgetCards").hidden = true;
+            });
+        });
 
         function setToday() {
-
-            const today =
-                new Date()
-                    .toISOString()
-                    .split("T")[0];
-
-            document.getElementById(
-                "expenditureDate"
-            ).value = today;
-
+            document.getElementById("expenditureDate").value = new Date().toISOString().split("T")[0];
         }
-
-
-
-        // ==================================================
-        // LOAD APPLICATIONS
-        // ==================================================
 
         async function loadApplications() {
-
-            const select =
-                document.getElementById(
-                    "applicationId"
-                );
-
+            const select = document.getElementById("applicationId");
             try {
+                const res = await fetch("/api/applications");
+                if (!res.ok) throw new Error();
+                const all = await res.json();
+                const approved = all.filter(a => (a.status || "").toUpperCase() === "APPROVED");
 
-                const response =
-                    await fetch(
-                        "/api/applications"
-                    );
+                select.innerHTML = "<option value=\"\">— Select an application —</option>";
 
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Unable to load applications"
-                    );
-
-                }
-
-                const applications =
-                    await response.json();
-
-                select.innerHTML = `
-
-                    <option value="">
-                        Select Application
-                    </option>
-
-                `;
-
-
-                if (
-                    !Array.isArray(applications) ||
-                    applications.length === 0
-                ) {
-
-                    select.innerHTML = `
-
-                        <option value="">
-                            No applications found
-                        </option>
-
-                    `;
-
+                if (approved.length === 0) {
+                    select.innerHTML = "<option value=\"\">No approved applications available</option>";
                     return;
-
                 }
 
-
-                applications.forEach(
-                    function (application) {
-
-                        const option =
-                            document.createElement(
-                                "option"
-                            );
-
-                        option.value =
-                            application.id;
-
-
-                        const facultyName =
-                            application.faculty &&
-                            application.faculty.name
-                                ? application.faculty.name
-                                : "Unknown Faculty";
-
-
-                        option.textContent =
-                            "#" +
-                            application.id +
-                            " - " +
-                            (
-                                application.title ||
-                                "Untitled Application"
-                            ) +
-                            " - " +
-                            facultyName;
-
-
-                        select.appendChild(
-                            option
-                        );
-
-                    }
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Application loading error:",
-                    error
-                );
-
-                select.innerHTML = `
-
-                    <option value="">
-                        Unable to load applications
-                    </option>
-
-                `;
-
+                approved.forEach(function(app) {
+                    const opt = document.createElement("option");
+                    opt.value = app.id;
+                    const facultyPart = (currentUser.role === "ADMIN" && app.faculty && app.faculty.name)
+                        ? " (" + app.faculty.name + ")" : "";
+                    opt.textContent = "#" + app.id + " — " + (app.title || "Untitled") + facultyPart;
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                select.innerHTML = "<option value=\"\">Unable to load applications</option>";
             }
-
         }
 
+        async function onApplicationChange() {
+            const appId = document.getElementById("applicationId").value;
+            if (!appId) {
+                document.getElementById("budgetCards").hidden = true;
+                return;
+            }
+            await refreshBudgetCards(appId);
+        }
 
+        async function refreshBudgetCards(appId) {
+            try {
+                const res = await fetch("/api/applications/" + appId + "/utilization");
+                if (!res.ok) { document.getElementById("budgetCards").hidden = true; return; }
+                const data = await res.json();
+                utilizationCache[appId] = data;
 
-        // ==================================================
-        // ADD EXPENDITURE
-        // ==================================================
+                document.getElementById("cardApproved").textContent = "₹" + fmt(data.approvedAmount);
+                document.getElementById("cardSpent").textContent = "₹" + fmt(data.totalSpent);
+                const rem = data.remainingAmount;
+                const remEl = document.getElementById("cardRemaining");
+                remEl.textContent = "₹" + fmt(rem);
+                remEl.style.color = rem <= 0 ? "#dc2626" : "#15803d";
+                document.getElementById("budgetCards").hidden = false;
+            } catch (e) {
+                document.getElementById("budgetCards").hidden = true;
+            }
+        }
 
         async function addExpenditure(event) {
-
             event.preventDefault();
+            const msg = document.getElementById("message");
+            msg.textContent = "Adding expenditure...";
+            msg.style.color = "#2563eb";
 
+            const appId = Number(document.getElementById("applicationId").value);
+            const description = document.getElementById("description").value.trim();
+            const amount = Number(document.getElementById("amount").value);
+            const expenditureDate = document.getElementById("expenditureDate").value;
 
-            const message =
-                document.getElementById(
-                    "message"
-                );
-
-
-            const applicationId =
-                Number(
-                    document.getElementById(
-                        "applicationId"
-                    ).value
-                );
-
-
-            const amount =
-                Number(
-                    document.getElementById(
-                        "amount"
-                    ).value
-                );
-
-
-            const description =
-                document.getElementById(
-                    "description"
-                ).value.trim();
-
-
-            const expenditureDate =
-                document.getElementById(
-                    "expenditureDate"
-                ).value;
-
-
-
-            // ================= VALIDATION =================
-
-            if (!applicationId) {
-
-                message.textContent =
-                    "Please select an application.";
-
-                message.style.color =
-                    "#dc2626";
-
+            if (!appId) {
+                msg.textContent = "Please select an application.";
+                msg.style.color = "#dc2626";
                 return;
-
             }
-
-
-            if (!description) {
-
-                message.textContent =
-                    "Please enter a description.";
-
-                message.style.color =
-                    "#dc2626";
-
-                return;
-
-            }
-
-
-            if (!amount || amount <= 0) {
-
-                message.textContent =
-                    "Please enter a valid amount.";
-
-                message.style.color =
-                    "#dc2626";
-
-                return;
-
-            }
-
-
-            if (!expenditureDate) {
-
-                message.textContent =
-                    "Please select an expenditure date.";
-
-                message.style.color =
-                    "#dc2626";
-
-                return;
-
-            }
-
-
-
-            message.textContent =
-                "Adding expenditure...";
-
-            message.style.color =
-                "#2563eb";
-
-
-
-            // ==================================================
-            // REQUEST DATA
-            // ==================================================
-
-            const expenditureData = {
-
-                description:
-                    description,
-
-                amount:
-                    amount,
-
-                expenditureDate:
-                    expenditureDate
-
-            };
-
-
-            console.log(
-                "Sending expenditure:",
-                expenditureData
-            );
-
-
-            console.log(
-                "Application ID:",
-                applicationId
-            );
-
-
-
-            // ==================================================
-            // SEND TO SPRING BOOT
-            // ==================================================
 
             try {
+                const res = await fetch("/api/expenditures/application/" + appId, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ description, amount, expenditureDate })
+                });
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.message || "Failed to add expenditure");
 
-                const response =
-                    await fetch(
-                        "/api/expenditures/application/" +
-                        applicationId,
-                        {
+                msg.textContent = "✓ Expenditure added successfully!";
+                msg.style.color = "#15803d";
 
-                            method: "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json"
-
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    expenditureData
-                                )
-
-                        }
-                    );
-
-
-
-                // Try to read response
-
-                const result =
-                    await response.json();
-
-
-
-                console.log(
-                    "Server response:",
-                    result
-                );
-
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        result.message ||
-                        "Failed to add expenditure"
-                    );
-
-                }
-
-
-
-                // ================= SUCCESS =================
-
-                message.textContent =
-                    "Expenditure added successfully!";
-
-                message.style.color =
-                    "#15803d";
-
-
-
-                // Clear form
-
-                document
-                    .getElementById(
-                        "expenditureForm"
-                    )
-                    .reset();
-
-
+                // Reset form fields but keep application selected
+                document.getElementById("description").value = "";
+                document.getElementById("amount").value = "";
                 setToday();
 
-
-
-                // Refresh history
-
+                await refreshBudgetCards(appId);
                 await loadExpenditures();
-
-
             } catch (error) {
-
-                console.error(
-                    "Expenditure creation error:",
-                    error
-                );
-
-
-                message.textContent =
-                    error.message ||
-                    "Something went wrong.";
-
-                message.style.color =
-                    "#dc2626";
-
+                msg.textContent = error.message || "Something went wrong.";
+                msg.style.color = "#dc2626";
             }
-
         }
-
-
-
-        // ==================================================
-        // LOAD EXPENDITURES
-        // ==================================================
 
         async function loadExpenditures() {
-
-            const table =
-                document.getElementById(
-                    "expenditureTableBody"
-                );
-
-
+            const tbody = document.getElementById("expenditureTableBody");
             try {
+                const res = await fetch("/api/expenditures");
+                if (!res.ok) throw new Error();
+                const list = await res.json();
+                tbody.innerHTML = "";
 
-                const response =
-                    await fetch(
-                        "/api/expenditures"
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Unable to load expenditures"
-                    );
-
-                }
-
-
-                const expenditures =
-                    await response.json();
-
-
-                table.innerHTML = "";
-
-
-                if (
-                    !Array.isArray(expenditures) ||
-                    expenditures.length === 0
-                ) {
-
-                    table.innerHTML = `
-
-                        <tr>
-
-                            <td
-                                colspan="6"
-                                style="
-                                    text-align:center;
-                                    padding:40px;
-                                    color:#64748b;
-                                ">
-
-                                No expenditures found.
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
+                if (!Array.isArray(list) || list.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan=\"7\" style=\"text-align:center;padding:40px;color:#64748b;\">No expenditures found.</td></tr>";
                     return;
-
                 }
 
+                list.forEach(function(exp) {
+                    const app = exp.application || {};
+                    const appStatus = (app.status || "").toUpperCase();
+                    const statusLabel = appStatus || "—";
+                    const statusStyle = appStatus === "APPROVED"
+                        ? "background:#dcfce7;color:#15803d;"
+                        : appStatus === "REJECTED"
+                            ? "background:#fee2e2;color:#dc2626;"
+                            : "background:#f1f5f9;color:#475569;";
 
+                    const row = document.createElement("tr");
+                    row.innerHTML =
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;\">" + exp.id + "</td>" +
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;font-weight:600;\">#" + (app.id || "—") + "<br><small style=\"font-weight:400;color:#64748b;\">" + escapeHtml(app.title || "—") + "</small></td>" +
+                        "<td class=\"col-faculty\" style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;\">" + escapeHtml((app.faculty && app.faculty.name) ? app.faculty.name : "—") + "</td>" +
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;\">" + escapeHtml(exp.description || "—") + "</td>" +
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;font-weight:600;\">₹" + fmt(exp.amount || 0) + "</td>" +
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;\">" + (exp.expenditureDate || "—") + "</td>" +
+                        "<td style=\"padding:14px 15px;border-bottom:1px solid #e5e7eb;\"><span style=\"padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;" + statusStyle + "\">" + statusLabel.replace("_", " ") + "</span></td>";
 
-                expenditures.forEach(
-                    function (expenditure) {
-
-                        const row =
-                            document.createElement(
-                                "tr"
-                            );
-
-
-                        const application =
-                            expenditure.application;
-
-
-                        const applicationId =
-                            application
-                                ? application.id
-                                : "—";
-
-
-                        const applicationTitle =
-                            application &&
-                            application.title
-                                ? application.title
-                                : "—";
-
-
-                        const facultyName =
-                            application &&
-                            application.faculty &&
-                            application.faculty.name
-                                ? application.faculty.name
-                                : "—";
-
-
-
-                        row.innerHTML = `
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                            ">
-
-                                ${expenditure.id}
-
-                            </td>
-
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                            ">
-
-                                #${applicationId}
-
-                                <br>
-
-                                <small>
-                                    ${escapeHtml(
-                                        applicationTitle
-                                    )}
-                                </small>
-
-                            </td>
-
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                            ">
-
-                                ${escapeHtml(
-                                    facultyName
-                                )}
-
-                            </td>
-
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                            ">
-
-                                ${escapeHtml(
-                                    expenditure.description ||
-                                    "—"
-                                )}
-
-                            </td>
-
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                                font-weight:600;
-                            ">
-
-                                ₹${Number(
-                                    expenditure.amount || 0
-                                ).toLocaleString("en-IN")}
-
-                            </td>
-
-
-                            <td style="
-                                padding:15px;
-                                border-bottom:1px solid #e5e7eb;
-                            ">
-
-                                ${
-                                    expenditure.expenditureDate ||
-                                    "—"
-                                }
-
-                            </td>
-
-                        `;
-
-
-                        table.appendChild(
-                            row
-                        );
-
+                    if (currentUser && currentUser.role === "FACULTY") {
+                        row.querySelectorAll(".col-faculty").forEach(el => el.hidden = true);
                     }
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Error loading expenditures:",
-                    error
-                );
-
-
-                table.innerHTML = `
-
-                    <tr>
-
-                        <td
-                            colspan="6"
-                            style="
-                                text-align:center;
-                                padding:40px;
-                                color:#dc2626;
-                            ">
-
-                            Unable to load expenditures.
-
-                        </td>
-
-                    </tr>
-
-                `;
-
+                    tbody.appendChild(row);
+                });
+            } catch (e) {
+                tbody.innerHTML = "<tr><td colspan=\"7\" style=\"text-align:center;padding:40px;color:#dc2626;\">Unable to load expenditures.</td></tr>";
             }
-
         }
 
+        function fmt(amount) {
+            return Number(amount).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
 
-
-        // ==================================================
-        // ESCAPE HTML
-        // ==================================================
-
-        function escapeHtml(value) {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-            div.textContent =
-                value;
-
-            return div.innerHTML;
-
+        function escapeHtml(v) {
+            const d = document.createElement("div");
+            d.textContent = v;
+            return d.innerHTML;
         }
 
     </script>
-
-
 </body>
-
 </html>

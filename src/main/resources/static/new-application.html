@@ -43,56 +43,9 @@
 
 
         <nav>
-
-            <a
-                href="/index.html"
-                class="nav-item">
-
-                <span>▣</span>
-                Dashboard
-
-            </a>
-
-
-            <a
-                href="/applications.html"
-                class="nav-item active">
-
-                <span>▤</span>
-                Applications
-
-            </a>
-
-
-            <a
-                href="/faculty.html"
-                class="nav-item">
-
-                <span>♙</span>
-                Faculty
-
-            </a>
-
-
-            <a
-                href="/stages.html"
-                class="nav-item">
-
-                <span>◈</span>
-                Grant Stages
-
-            </a>
-
-
-            <a
-                href="/expenditures.html"
-                class="nav-item">
-
-                <span>₹</span>
-                Expenditures
-
-            </a>
-
+            <a href="/applications.html" class="nav-item"><span>▤</span> My Applications</a>
+            <a href="/new-application.html" class="nav-item active"><span>＋</span> New Application</a>
+            <a href="/expenditures.html" class="nav-item"><span>₹</span> Expenditures</a>
         </nav>
 
 
@@ -193,33 +146,25 @@
                 <form id="applicationForm">
 
 
-                    <!-- FACULTY -->
+                    <!-- FACULTY INFO (shown for faculty, filled from their profile) -->
 
-                    <div class="form-group">
-
-                        <label for="facultyId">
-                            Select Faculty
-                        </label>
-
-
-                        <select
-                            id="facultyId"
-                            name="facultyId"
-                            required>
-
-                            <option value="">
-                                Loading faculty...
-                            </option>
-
-                        </select>
-
-
-                        <small>
-                            Select the faculty member responsible for this application.
-                        </small>
-
+                    <div class="form-group" id="facultyInfoGroup">
+                        <label>Your Details</label>
+                        <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:16px;line-height:2;">
+                            <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
+                                <strong style="min-width:100px;">Name:</strong>
+                                <span id="displayName" style="color:#374151;">—</span>
+                            </div>
+                            <div class="form-group" style="margin-bottom:10px;">
+                                <label for="facultyDept">Department</label>
+                                <input type="text" id="facultyDept" placeholder="e.g. Computer Science" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label for="facultyEmail">Email</label>
+                                <input type="email" id="facultyEmail" placeholder="e.g. name@university.edu" required>
+                            </div>
+                        </div>
                     </div>
-
 
 
                     <!-- TITLE -->
@@ -373,338 +318,65 @@
 
     <!-- ================= JAVASCRIPT ================= -->
 
+    <script src="/auth.js"></script>
     <script>
 
-
-        // ==================================================
-        // PAGE LOAD
-        // ==================================================
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                loadFaculty();
-
-                document
-                    .getElementById("applicationForm")
-                    .addEventListener(
-                        "submit",
-                        createApplication
-                    );
-
-            }
-        );
-
-
-
-        // ==================================================
-        // LOAD FACULTY
-        // ==================================================
-
-        async function loadFaculty() {
-
-            const select =
-                document.getElementById(
-                    "facultyId"
-                );
-
-
-            try {
-
-                /*
-                 * Get all faculty members
-                 *
-                 * IMPORTANT:
-                 * This assumes your FacultyController
-                 * endpoint is:
-                 *
-                 * GET /api/faculty
-                 */
-
-                const response =
-                    await fetch(
-                        "/api/faculty"
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Unable to load faculty"
-                    );
-
-                }
-
-
-                const facultyList =
-                    await response.json();
-
-
-                select.innerHTML = `
-                    <option value="">
-                        Select Faculty
-                    </option>
-                `;
-
-
-                if (
-                    !Array.isArray(facultyList) ||
-                    facultyList.length === 0
-                ) {
-
-                    select.innerHTML = `
-                        <option value="">
-                            No faculty found
-                        </option>
-                    `;
-
-                    return;
-
-                }
-
-
-                facultyList.forEach(
-                    function (faculty) {
-
-                        const option =
-                            document.createElement(
-                                "option"
-                            );
-
-
-                        option.value =
-                            faculty.id;
-
-
-                        option.textContent =
-                            "#" +
-                            faculty.id +
-                            " - " +
-                            (
-                                faculty.name ||
-                                "Unnamed Faculty"
-                            );
-
-
-                        select.appendChild(
-                            option
-                        );
-
-                    }
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Faculty loading error:",
-                    error
-                );
-
-
-                select.innerHTML = `
-                    <option value="">
-                        Unable to load faculty
-                    </option>
-                `;
-
-            }
-
+        function waitForUser(callback) {
+            if (window.grantTrackUser) callback(window.grantTrackUser);
+            else setTimeout(() => waitForUser(callback), 50);
         }
 
-
-
-        // ==================================================
-        // CREATE APPLICATION
-        // ==================================================
+        waitForUser(function(user) {
+            document.getElementById("displayName").textContent = user.name || "—";
+            document.getElementById("applicationForm")
+                .addEventListener("submit", createApplication);
+        });
 
         async function createApplication(event) {
-
             event.preventDefault();
+            const message = document.getElementById("message");
+            message.textContent = "Creating application...";
+            message.style.color = "#2563eb";
 
+            const user = window.grantTrackUser;
+            const title = document.getElementById("title").value.trim();
+            const abstractText = document.getElementById("abstractText").value.trim();
+            const requestedAmount = Number(document.getElementById("requestedAmount").value);
+            const department = document.getElementById("facultyDept").value.trim();
+            const email = document.getElementById("facultyEmail").value.trim();
 
-            const message =
-                document.getElementById(
-                    "message"
-                );
-
-
-            message.textContent =
-                "Creating application...";
-
-
-            message.style.color =
-                "#2563eb";
-
-
-            // Get selected faculty
-
-            const facultyId =
-                Number(
-                    document.getElementById(
-                        "facultyId"
-                    ).value
-                );
-
-
-            const title =
-                document.getElementById(
-                    "title"
-                ).value.trim();
-
-
-            const abstractText =
-                document.getElementById(
-                    "abstractText"
-                ).value.trim();
-
-
-            const requestedAmount =
-                Number(
-                    document.getElementById(
-                        "requestedAmount"
-                    ).value
-                );
-
-
-            // Validate faculty
-
-            if (!facultyId) {
-
-                message.textContent =
-                    "Please select a faculty member.";
-
-                message.style.color =
-                    "#dc2626";
-
+            if (!title || !abstractText || !requestedAmount || !department || !email) {
+                message.textContent = "Please fill in all fields.";
+                message.style.color = "#dc2626";
                 return;
-
             }
-
-
-            // ==================================================
-            // APPLICATION DATA
-            // ==================================================
-
-            const applicationData = {
-
-                title: title,
-
-                abstractText:
-                    abstractText,
-
-                requestedAmount:
-                    requestedAmount,
-
-                faculty: {
-
-                    id: facultyId
-
-                },
-
-                status:
-                    "SUBMITTED"
-
-            };
-
-
-            console.log(
-                "Application data:",
-                applicationData
-            );
-
 
             try {
+                // Update faculty department and email first
+                await fetch("/api/faculty/" + user.facultyId, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: user.name, department, email })
+                });
 
+                // Create the application
+                const response = await fetch("/api/applications", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ title, abstractText, requestedAmount })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || "Failed to create application");
 
-                const response =
-                    await fetch(
-                        "/api/applications",
-                        {
-
-                            method: "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json"
-
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    applicationData
-                                )
-
-                        }
-                    );
-
-
-                const result =
-                    await response.json();
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        result.message ||
-                        "Failed to create application"
-                    );
-
-                }
-
-
-                console.log(
-                    "Application created:",
-                    result
-                );
-
-
-                // Success
-
-                message.textContent =
-                    "Application created successfully!";
-
-                message.style.color =
-                    "#15803d";
-
-
-                // Go back to Applications page
-
-                setTimeout(
-                    function () {
-
-                        window.location.href =
-                            "/applications.html";
-
-                    },
-                    1000
-                );
-
-
+                message.textContent = "Application created successfully!";
+                message.style.color = "#15803d";
+                setTimeout(() => window.location.href = "/applications.html", 1000);
             } catch (error) {
-
-                console.error(
-                    "Application creation error:",
-                    error
-                );
-
-
-                message.textContent =
-                    error.message ||
-                    "Something went wrong.";
-
-                message.style.color =
-                    "#dc2626";
-
+                message.textContent = error.message || "Something went wrong.";
+                message.style.color = "#dc2626";
             }
-
         }
 
     </script>
-
-
 </body>
-
 </html>

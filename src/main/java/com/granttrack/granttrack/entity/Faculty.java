@@ -15,11 +15,9 @@ public class Faculty {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Department is required")
     private String department;
 
     @Email(message = "Enter a valid email")
-    @NotBlank(message = "Email is required")
     private String email;
 
     public Faculty() {

@@ -52,7 +52,8 @@ public class DashboardService {
                 .sum();
 
         List<Expenditure> expenditures =
-                expenditureRepository.findAll();
+                expenditureRepository.findByApplication_StatusIgnoreCase(
+                        "APPROVED");
 
         double totalExpenditure = expenditures.stream()
                 .map(Expenditure::getAmount)

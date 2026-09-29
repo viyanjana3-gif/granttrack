@@ -1,12 +1,18 @@
 package com.granttrack.granttrack.service;
 
 import com.granttrack.granttrack.dto.GrantUtilizationResponse;
+import com.granttrack.granttrack.dto.AuthUser;
 import com.granttrack.granttrack.entity.Application;
 import com.granttrack.granttrack.entity.Expenditure;
+import com.granttrack.granttrack.entity.Faculty;
 import com.granttrack.granttrack.repository.ApplicationRepository;
 import com.granttrack.granttrack.repository.ExpenditureRepository;
+import com.granttrack.granttrack.repository.FacultyRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,28 +20,43 @@ public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final ExpenditureRepository expenditureRepository;
+    private final FacultyRepository facultyRepository;
 
     public ApplicationService(
             ApplicationRepository applicationRepository,
-            ExpenditureRepository expenditureRepository) {
+            ExpenditureRepository expenditureRepository,
+            FacultyRepository facultyRepository) {
 
         this.applicationRepository = applicationRepository;
         this.expenditureRepository = expenditureRepository;
+        this.facultyRepository = facultyRepository;
     }
 
-    public Application createApplication(Application application) {
+    public Application createApplication(Application application, AuthUser user) {
+        application.setId(null);
 
-        if (application.getStatus() == null ||
-                application.getStatus().isBlank()) {
-
-            application.setStatus("SUBMITTED");
+        if (user.isAdmin()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "Administrators cannot create applications");
         }
+
+        Faculty faculty = facultyRepository.findById(user.facultyId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Faculty identity is unavailable"));
+        application.setFaculty(faculty);
+        application.setStatus("SUBMITTED");
+        application.setApprovedAmount(null);
+        application.setStages(new ArrayList<>());
+        application.setExpenditures(new ArrayList<>());
 
         return applicationRepository.save(application);
     }
 
-    public List<Application> getAllApplications() {
-        return applicationRepository.findAll();
+    public List<Application> getAllApplications(AuthUser user) {
+        if (user.isAdmin()) {
+            return applicationRepository.findAll();
+        }
+        return applicationRepository.findByFaculty_Id(user.facultyId());
     }
 
     public Application getApplicationById(Long id) {
@@ -45,10 +66,22 @@ public class ApplicationService {
                         new RuntimeException("Application not found"));
     }
 
+    public Application getApplicationById(Long id, AuthUser user) {
+        Application application = getApplicationById(id);
+        verifyOwnership(application, user);
+        return application;
+    }
+
     public Application updateApplicationStatus(
             Long id,
             String status,
-            Double approvedAmount) {
+            Double approvedAmount,
+            AuthUser user) {
+
+        if (user.isFaculty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "Administrator access required");
+        }
 
         Application application = getApplicationById(id);
 
@@ -68,9 +101,11 @@ public class ApplicationService {
         return applicationRepository.save(application);
     }
 
-    public GrantUtilizationResponse getGrantUtilization(Long applicationId) {
+    public GrantUtilizationResponse getGrantUtilization(
+            Long applicationId,
+            AuthUser user) {
 
-        Application application = getApplicationById(applicationId);
+        Application application = getApplicationById(applicationId, user);
 
         if (application.getApprovedAmount() == null) {
 
@@ -102,7 +137,20 @@ public class ApplicationService {
         );
     }
 
-    public void deleteApplication(Long id) {
+    public void deleteApplication(Long id, AuthUser user) {
+        if (user.isFaculty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "Administrator access required");
+        }
         applicationRepository.deleteById(id);
+    }
+
+    private void verifyOwnership(Application application, AuthUser user) {
+        if (user.isFaculty() &&
+                (application.getFaculty() == null ||
+                 !user.facultyId().equals(application.getFaculty().getId()))) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Application not found");
+        }
     }
 }

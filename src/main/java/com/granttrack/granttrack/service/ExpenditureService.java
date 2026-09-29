@@ -1,5 +1,6 @@
 package com.granttrack.granttrack.service;
 
+import com.granttrack.granttrack.dto.AuthUser;
 import com.granttrack.granttrack.entity.Application;
 import com.granttrack.granttrack.entity.Expenditure;
 import com.granttrack.granttrack.repository.ApplicationRepository;
@@ -26,7 +27,8 @@ public class ExpenditureService {
 
     public Expenditure addExpenditure(
             Long applicationId,
-            Expenditure expenditure) {
+            Expenditure expenditure,
+            AuthUser user) {
 
         Application application = applicationRepository
                 .findById(applicationId)
@@ -35,24 +37,25 @@ public class ExpenditureService {
                                 HttpStatus.NOT_FOUND,
                                 "Application not found"));
 
-        // BUSINESS RULE 1
-        // Expenditure is allowed only for APPROVED applications.
+        // Faculty can only add expenditures to their own applications
+        if (user.isFaculty() &&
+                (application.getFaculty() == null ||
+                 !user.facultyId().equals(application.getFaculty().getId()))) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Application not found");
+        }
 
         if (!"APPROVED".equalsIgnoreCase(application.getStatus())) {
-
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Expenditure logging is only allowed for approved applications.");
+                    "Expenditure can only be added to an approved application.");
         }
 
         if (application.getApprovedAmount() == null) {
-
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Approved amount is not available.");
+                    "Approved amount is not set for this application.");
         }
-
-        // Calculate existing expenditure
 
         List<Expenditure> existingExpenses =
                 expenditureRepository.findByApplicationId(applicationId);
@@ -61,24 +64,21 @@ public class ExpenditureService {
                 .mapToDouble(Expenditure::getAmount)
                 .sum();
 
-        double newTotal =
-                totalAlreadySpent + expenditure.getAmount();
-
-        // BUSINESS RULE 2
-        // Total expenditure cannot exceed approved amount.
+        double remaining = application.getApprovedAmount() - totalAlreadySpent;
+        double newTotal = totalAlreadySpent + expenditure.getAmount();
 
         if (newTotal > application.getApprovedAmount()) {
-
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Total expenditure cannot exceed the approved grant amount. " +
-                    "Approved amount: " + application.getApprovedAmount() +
-                    ", Already spent: " + totalAlreadySpent +
-                    ", New expenditure: " + expenditure.getAmount());
+                    "Limit exceeded! You can only spend \u20b9" +
+                    String.format("%.2f", remaining) +
+                    " more. Approved: \u20b9" +
+                    String.format("%.2f", application.getApprovedAmount()) +
+                    ", Already spent: \u20b9" +
+                    String.format("%.2f", totalAlreadySpent) + ".");
         }
 
         expenditure.setApplication(application);
-
         return expenditureRepository.save(expenditure);
     }
 
@@ -86,15 +86,11 @@ public class ExpenditureService {
         return expenditureRepository.findAll();
     }
 
-    public List<Expenditure> getExpendituresByApplication(
-            Long applicationId) {
-
-        return expenditureRepository
-                .findByApplicationId(applicationId);
+    public List<Expenditure> getExpendituresByApplication(Long applicationId) {
+        return expenditureRepository.findByApplicationId(applicationId);
     }
 
     public Expenditure getExpenditureById(Long id) {
-
         return expenditureRepository.findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(

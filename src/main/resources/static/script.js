@@ -128,17 +128,13 @@ async function loadDashboard() {
                 data.totalApprovedGrant) * 100;
         }
 
-        utilizationPercentage =
-            Math.min(utilizationPercentage, 100);
-
-
         // Progress bars
         const expenditureProgress =
             document.getElementById("expenditureProgress");
 
         if (expenditureProgress) {
             expenditureProgress.style.width =
-                utilizationPercentage + "%";
+                Math.min(utilizationPercentage, 100) + "%";
         }
 
 

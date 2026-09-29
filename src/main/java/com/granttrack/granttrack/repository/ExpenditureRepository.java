@@ -8,4 +8,6 @@ import java.util.List;
 public interface ExpenditureRepository extends JpaRepository<Expenditure, Long> {
 
     List<Expenditure> findByApplicationId(Long applicationId);
+
+    List<Expenditure> findByApplication_StatusIgnoreCase(String status);
 }
